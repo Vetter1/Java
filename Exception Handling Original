@@ -22,7 +22,7 @@ public class Exhandling{
 		}
 	}
 	
-	public void array()
+	public void array(
 	{
 		int i;
 		int[]arr= {1,2,3,4,5}	;
