@@ -1,0 +1,100 @@
+import java.util.Scanner;
+class employee{
+    
+    String name,address,mail;
+    int id,number,basic;
+    
+    void input()
+    {
+        Scanner sc=new Scanner(System.in);
+     System.out.println("enter name");
+    name=sc.nextLine();
+         System.out.println("enter address");
+    address=sc.nextLine();
+         System.out.println("enter mail");
+    mail=sc.nextLine();
+         System.out.println("enter salary");
+    basic=sc.nextInt();
+    }
+    
+    
+    void salary(){
+        float da,hra,pf,cf,gross;
+        da= basic* 0.97f/100;
+        hra= basic* 10/100;
+        pf= basic* 12/100;
+        cf=basic* 0.1f/100;
+        
+       gross=basic+da+hra-pf-cf;
+    System.out.println("\n");    
+    System.out.println("name="+name);
+    System.out.println("address="+address);
+    System.out.println("mail="+mail);
+    System.out.println("da="+da);
+    System.out.println("hra="+hra);
+    System.out.println("pf="+pf);
+    System.out.println("cf="+cf);
+    System.out.println("basic salary="+basic);
+    System.out.println("gross salary="+gross);
+
+        
+    }
+    
+}
+class programmer extends employee{
+    
+    
+}
+
+class teamlead extends employee{
+    
+    
+}
+
+class apm extends employee{
+    
+    
+}
+
+class projectmanager extends employee{
+    
+    
+}
+
+public class inheritance{
+    public static void main(String args[]){
+          Scanner sc=new Scanner(System.in);
+        int ch;
+        System.out.println("1=programmer");
+         System.out.println("2=teamlead");
+                  System.out.println("3=apm");
+                           System.out.println("4=project manager");
+                                    System.out.println("enter your choice");
+                                    ch=sc.nextInt();
+        switch(ch){
+            case 1:
+programmer p=new programmer();
+p.input();
+p.salary();
+    break;
+  case 2:
+   teamlead y=new teamlead();
+y.input();
+y.salary();
+    break;
+  case 3:
+  apm x=new apm();
+x.input();
+x.salary();
+    break;
+  case 4:
+  projectmanager c =new projectmanager();
+c.input();
+c.salary();
+    break;
+  case 5:
+    System.out.print("invalid choice");
+        }
+    }
+    
+}
