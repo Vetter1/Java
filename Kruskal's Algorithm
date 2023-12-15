@@ -1,0 +1,163 @@
+#include <iostream>
+#include<string.h>
+using namespace std;
+#define max 20
+struct adjacency_list
+{
+	char name;
+	int cost;
+	struct adjacency_list *next;
+}*l[max];
+class kruskal
+{
+public:
+	void KruskalsAlgorithm(int [max][max],char [max][max]);
+};
+int total;
+const int infinity=999;
+
+void kruskal::KruskalsAlgorithm(int adjacent_vertex[max][max],char country[max][max])
+{
+	int visited[max],cost[max][max],i,j,min=0,min2,pre,pos,least=0,start=0,total_cost=0;
+//here cost is the distance between each country
+	for(i=0;i<total;i++)
+		visited[i]=0;//initializing visited to 0
+
+	for(i=0;i<total;i++)
+	{
+		for(j=0;j<total;j++)
+		{
+			if(i==j)
+				cost[i][j]=infinity;//making same country to same country distance infinity
+			else
+			{
+				cost[i][j]=adjacent_vertex[i][j];//storing in cost
+			}
+		}
+	}
+
+
+	pos=start;
+	visited[start]=1;
+	cout<<"\n"<<country[pos];
+	total_cost=0;
+	for(i=0;i<total-1;i++)
+	{
+
+		min=cost[pos][0];
+		for(j=0;j<total;j++)
+		{
+			if(cost[pos][j]<=min && visited[j]==0 && cost[pos][j]!=999)//first comparing that do we got any minimum
+			{
+				min=cost[pos][j];
+				least=j;
+
+
+			}
+
+		}
+		for(j=0;j<total;j++)
+		{	//if any test cases fail try cost<min instead cost<=min ,in above if condition also do same
+			if(cost[pre][j]<=min&&visited[j]==0&&cost[pre][j]!=999)//again comparing same as prim on paper
+			{
+				min=cost[pre][j];//if we got less distance than minimum than reolace
+				least=j;
+			}
+		}
+		total_cost=total_cost+min;
+		visited[least]=1;
+		pre=pos;//storing previous node
+		pos=least;//storing next node
+		cout<<"==>"<<country[least];
+
+	}
+
+	cout<<"\nTotal Cost is:-"<<total_cost;
+}
+int main()
+{
+	int repeat;
+	do{
+		kruskal k;
+		int i,j,adjacency_matrix[max][max],pos;
+		char country[max][max],start[max];
+		cout<<"Enter no of vertex :-";
+		cin>>total;
+
+		//taking different countries names
+		for(i=0;i<total;i++)
+		{
+			cout<<"\nEnter "<<i+1<<" Vertex name :-";
+			cin>>country[i];
+		}
+
+		cout<<"\nPlease use 999 as distance between two non adjacent or unconnected vertices\n";
+
+		//taking input for adjacency matrix i.e. distance between each other
+		//initializing it with infinity
+		for(i=0;i<total;i++)
+		{
+			for(j=0;j<total;j++)
+				adjacency_matrix[i][j]=infinity;
+		}
+		for(i=0;i<total;i++)
+		{
+
+			for(j=i;j<total;j++)
+			{
+				if(i==j)
+					adjacency_matrix[i][j]=infinity;//in prims it get to infinity in short it doesnt matter
+				else
+				{
+					cout<<"Enter distance between "<<country[i]<<" and "<<country[j]<<" :-";
+					cin>>adjacency_matrix[i][j];
+					adjacency_matrix[j][i]=adjacency_matrix[i][j];//j i=i j making them same
+				}
+			}
+		}
+
+		for(i=0;i<total;i++)
+		{
+			adjacency_list *curr;
+			for(j=0;j<total;j++)
+			{
+				if(adjacency_matrix[i][j]!=999)
+				{
+					adjacency_list *temp=new adjacency_list;
+					temp->cost=adjacency_matrix[i][j];
+					temp->next=NULL;
+					temp->name=country[j][0];
+
+					if(l[i]==NULL)
+						l[i]=temp;
+					else
+					{
+						curr=l[i];
+						while(curr->next!=NULL)
+							curr=curr->next;
+						curr->next=temp;
+
+					}
+
+				}
+			}
+		}
+		for(i=0;i<total;i++)
+		{
+			adjacency_list *curr;
+			curr=l[i];
+			cout<<"\n"<<country[i]<<"==>\t";
+			while(curr->next!=NULL)
+			{
+				cout<<curr->name<<"\t";
+				curr=curr->next;
+			}
+			cout<<curr->name<<"\t";
+		}
+
+		k.KruskalsAlgorithm(adjacency_matrix,country);
+		cout<<"\nPress 1 to do it again\n";
+		cin>>repeat;
+	}while(repeat==1);
+	return 0;
+}
